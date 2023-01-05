@@ -1,12 +1,19 @@
 'use strict';
 
-module.exports = (sequelize, DataTypes) => {
-  const category = sequelize.define('Category', {
-      id: DataTypes.INTEGER,
-      name: DataTypes.STRING
+  module.exports = (sequelize, DataTypes) => {
+    const Category = sequelize.define('Category', {
+      id: { 
+        type: DataTypes.INTEGER, 
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true
+      },
+      name: {
+        type: DataTypes.STRING
+      }
     }, {
-      sequelize,
-      modelName: 'category.model',
+      timestamps: false,
+      tableName: 'categories',
     });
-    return category;
+    return Category;
   };
