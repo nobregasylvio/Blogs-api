@@ -12,6 +12,4 @@ const loginController = async (req, res) => {
   return res.status(type).json({ token });
 };
 
-module.exports = {
-  loginController,
-};
+module.exports = { loginController };
