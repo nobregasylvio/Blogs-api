@@ -8,9 +8,7 @@ const insertUser = async ({ displayName, email, password, image = null }) => {
 
   const [user, created] = await User.findOrCreate({
     where: { email },
-    attributes: {
-      exclude: ['password'],
-    },
+    attributes: { exclude: ['password'] },
     defaults: { displayName, email, password, image },
   });
 
@@ -21,6 +19,20 @@ const insertUser = async ({ displayName, email, password, image = null }) => {
   return { token };
 };
 
+const getByUserId = async (userId) => {
+  const user = await User.findByPk(userId);
+  if (!user) return { type: 404, message: 'User does not exist' };
+  return { type: null, message: user };
+};
+
+const getAll = async () => {
+  const users = await User.findAll({ attributes: { exclude: ['password'] } });
+
+  return { type: null, message: users };
+};
+
 module.exports = {
   insertUser,
+  getByUserId,
+  getAll,
 };
