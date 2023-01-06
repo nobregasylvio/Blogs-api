@@ -5,11 +5,9 @@ const loginController = async (req, res) => {
 
   const { type, message, token } = await loginService(email, password);
 
-  if (type !== 200) {
-    return res.status(type).json({ message });
-  }
+  if (type) return res.status(type).json({ message });
 
-  return res.status(type).json({ token });
+  return res.status(200).json({ token });
 };
 
 module.exports = { loginController };

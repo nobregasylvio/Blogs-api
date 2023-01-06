@@ -13,7 +13,7 @@ const loginService = async (email, password) => {
   const { password: _, ...userWithoutPassword } = user.dataValues;
   const token = createToken(userWithoutPassword);
 
-  return { type: 200, token };
+  return { type: null, token };
 };
 
 module.exports = {
