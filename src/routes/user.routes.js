@@ -5,7 +5,7 @@ const userControler = require('../controllers/user.controller');
 const userRoute = express.Router();
 
 userRoute.get('/', validateJWT, userControler.getAll);
-userRoute.get('/:id');
+userRoute.get('/:id', validateJWT, userControler.getByUserId);
 
 userRoute.post('/', userControler.insertUser);
 

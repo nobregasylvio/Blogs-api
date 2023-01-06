@@ -20,7 +20,7 @@ const insertUser = async ({ displayName, email, password, image = null }) => {
 };
 
 const getByUserId = async (userId) => {
-  const user = await User.findByPk(userId);
+  const user = await User.findByPk(userId, { attributes: { exclude: ['password'] } });
   if (!user) return { type: 404, message: 'User does not exist' };
   return { type: null, message: user };
 };
