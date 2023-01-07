@@ -9,6 +9,6 @@ userRoute.get('/:id', validateJWT, userControler.getByUserId);
 
 userRoute.post('/', userControler.insertUser);
 
-userRoute.delete('/me');
+userRoute.delete('/me', validateJWT, userControler.deleteUser);
 
 module.exports = userRoute;
