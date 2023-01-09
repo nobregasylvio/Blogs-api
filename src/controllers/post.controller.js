@@ -1,6 +1,12 @@
 const { verifyToken } = require('../auth/jwtFunctions');
 const postService = require('../services/post.service');
 
+const getAllPost = async (_req, res) => {
+  const { message } = await postService.getAllPost();
+
+  return res.status(200).json(message);
+};
+
 const insertPost = async (req, res) => {
   const { title, content, categoryIds } = req.body;
   const { authorization } = req.headers;
@@ -15,4 +21,5 @@ const insertPost = async (req, res) => {
 
 module.exports = {
   insertPost,
+  getAllPost,
 };

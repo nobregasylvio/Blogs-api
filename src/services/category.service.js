@@ -6,7 +6,6 @@ const insertCategory = async (nameCategory) => {
   if (type) return { type, message };
 
   const category = await Category.create({ name: nameCategory });
-  console.log(category);
   return { type: null, message: category };
 };
 

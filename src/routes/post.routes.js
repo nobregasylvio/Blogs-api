@@ -4,7 +4,7 @@ const { validateJWT } = require('../auth/validateJWT');
 
 const postRoute = express.Router();
 
-postRoute.get('/');
+postRoute.get('/', validateJWT, postController.getAllPost);
 postRoute.get('/:id');
 postRoute.get('/search');
 
