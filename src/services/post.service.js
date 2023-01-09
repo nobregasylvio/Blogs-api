@@ -11,7 +11,7 @@ const getAllPost = async () => {
   return { type: null, message: posts };
 };
 
-const getByUserId = async (id) => {
+const getByPostId = async (id) => {
   const post = await BlogPost.findOne({
     where: { id },
     include: [
@@ -60,9 +60,28 @@ const deleteByPostId = async (id, userId) => {
   return { type: null, message: '' };
 };
 
+const isUpdateValid = (title, content) => title && content;
+
+const updateByPostId = async (id, title, content, userId) => {
+  const { message } = await getByPostId(id);
+  
+  if (!isUpdateValid(title, content)) {
+    return { type: 400, message: 'Some required fields are missing' };
+  }
+
+  if (userId !== message.userId) return { type: 401, message: 'Unauthorized user' };
+
+  await BlogPost.update({ title, content }, { where: { id, userId } });
+
+  const result = await getByPostId(id);
+
+  return { type: null, message: result.message };
+};
+
 module.exports = {
   insertPost,
   getAllPost,
-  getByUserId,
+  getByPostId,
   deleteByPostId,
+  updateByPostId,
 };

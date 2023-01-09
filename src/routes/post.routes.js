@@ -8,7 +8,7 @@ postRoute.get('/', validateJWT, postController.getAllPost);
 postRoute.get('/:id', validateJWT, postController.getByPostId);
 postRoute.get('/search');
 
-postRoute.put('/:id');
+postRoute.put('/:id', validateJWT, postController.updateByPostId);
 
 postRoute.delete('/:id', validateJWT, postController.deleteByPostId);
 

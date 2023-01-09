@@ -9,7 +9,7 @@ const getAllPost = async (_req, res) => {
 
 const getByPostId = async (req, res) => {
   const { id } = req.params;
-  const { type, message } = await postService.getByUserId(id);
+  const { type, message } = await postService.getByPostId(id);
 
   if (type) return res.status(type).json({ message });
 
@@ -39,9 +39,23 @@ const deleteByPostId = async (req, res) => {
   return res.status(204).send();
 };
 
+const updateByPostId = async (req, res) => {
+  const { title, content } = req.body;
+  const { id } = req.params;
+  const { authorization } = req.headers;
+  const { user: { id: userId } } = await verifyToken(authorization);
+
+  const { type, message } = await postService.updateByPostId(id, title, content, userId);
+
+  if (type) return res.status(type).json({ message });
+
+  return res.status(200).json(message);
+};
+
 module.exports = {
   insertPost,
   getAllPost,
   getByPostId,
   deleteByPostId,
+  updateByPostId,
 };
