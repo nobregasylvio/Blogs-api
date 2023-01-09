@@ -10,7 +10,7 @@ postRoute.get('/search');
 
 postRoute.put('/:id');
 
-postRoute.delete('/');
+postRoute.delete('/:id', validateJWT, postController.deleteByPostId);
 
 postRoute.post('/', validateJWT, postController.insertPost);
 

@@ -50,8 +50,19 @@ const insertPost = async (id, title, content, categoryIds) => {
   return { type: null, message: dataValues };
 };
 
+const deleteByPostId = async (id, userId) => {
+  const post = await BlogPost.findByPk(id);
+  if (!post) return { type: 404, message: 'Post does not exist' };
+  if (userId !== post.userId) return { type: 401, message: 'Unauthorized user' };
+
+  await post.destroy();
+  
+  return { type: null, message: '' };
+};
+
 module.exports = {
   insertPost,
   getAllPost,
   getByUserId,
+  deleteByPostId,
 };

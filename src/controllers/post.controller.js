@@ -28,8 +28,20 @@ const insertPost = async (req, res) => {
   return res.status(201).json(message);
 };
 
+const deleteByPostId = async (req, res) => {
+  const { id } = req.params;
+  const { authorization } = req.headers;
+  const { user: { id: userId } } = await verifyToken(authorization);
+
+  const { type, message } = await postService.deleteByPostId(id, userId);
+  if (type) return res.status(type).json({ message });
+
+  return res.status(204).send();
+};
+
 module.exports = {
   insertPost,
   getAllPost,
   getByPostId,
+  deleteByPostId,
 };
