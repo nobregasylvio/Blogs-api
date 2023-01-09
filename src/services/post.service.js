@@ -11,6 +11,20 @@ const getAllPost = async () => {
   return { type: null, message: posts };
 };
 
+const getByUserId = async (id) => {
+  const post = await BlogPost.findOne({
+    where: { id },
+    include: [
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category, as: 'categories' },
+    ],
+  });
+
+  if (!post) return { type: 404, message: 'Post does not exist' };
+
+  return { type: null, message: post };
+};
+
 const isCategoryValid = async (categoryIds) => {
   const allCategories = await Category.findAll();
   const categoriesExist = categoryIds.map((e) => allCategories
@@ -39,4 +53,5 @@ const insertPost = async (id, title, content, categoryIds) => {
 module.exports = {
   insertPost,
   getAllPost,
+  getByUserId,
 };
